@@ -1,4 +1,4 @@
-*Under development*
+**Under development**
 # Fully Functiional Ecommerce website
 
 1. Made using MERN stack
