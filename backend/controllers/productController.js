@@ -1,4 +1,6 @@
 const Product = require('../models/productModel.js');
+const ErrorHander = require('../utils/errorHander.js');
+cosnt catchAsyncErrors = require('../middlewares/catchAsyncErrors.js');
 
 // Create product ---> Admin Route
 exports.createProduct = async(req, res, next) => {
@@ -10,7 +12,7 @@ exports.createProduct = async(req, res, next) => {
 };
 
 // Get all products
-exports.getAllProducts = async (req, res) => {
+exports.getAllProducts = async (req, res, next) => {
     const products = await Product.find();
     res.status(200).json({
         success: true,
@@ -19,13 +21,11 @@ exports.getAllProducts = async (req, res) => {
 };
 
 // Get product details
-exports.getProductDetails = async(req, res) => {
+exports.getProductDetails = async(req, res, next) => {
     const product = await Product.findById(req.params.id);
     if (!product) {
-        return res.status(500).json({
-            success: false,
-            message: "Product cannot be found"
-        });
+        // Calling error handler class so that we don't have to type it manually more than once
+        return next(new ErrorHander("Product not found", 404));
     }
     return res.status(200).json({
         success: true,
@@ -37,10 +37,8 @@ exports.getProductDetails = async(req, res) => {
 exports.updateProduct = async(req, res, next) => {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body);
     if (!product) {
-        return res.status(500).json({
-            success: false,
-            message: "Product cannot be found"
-        });
+        // Calling error handler class so that we don't have to type it manually more than once
+        return next(new ErrorHander("Product not found", 404));
     } else{
         return res.status(200).json({
             success: true,
@@ -53,10 +51,8 @@ exports.updateProduct = async(req, res, next) => {
 exports.deleteProduct = async(req, res, next) => {
     const product = await Product.findByIdAndDelete(req.params.id);
     if (!product) {
-        return res.status(500).json({
-            success: false,
-            message: "Product cannot be found"
-        });
+        // Calling error handler class so that we don't have to type it manually more than once
+        return next(new ErrorHander("Product not found", 404));
     } else{
         return res.status(200).json({
             success: true,
