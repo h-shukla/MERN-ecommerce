@@ -1,6 +1,6 @@
 const Product = require('../models/productModel.js');
 const ErrorHander = require('../utils/errorHander.js');
-cosnt catchAsyncErrors = require('../middlewares/catchAsyncErrors.js');
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors.js');
 
 // Create product ---> Admin Route
 exports.createProduct = async(req, res, next) => {
