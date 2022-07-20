@@ -3,7 +3,7 @@ const ErrorHander = require('../utils/errorHander.js');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors.js');
 
 // Create product ---> Admin Route
-exports.createProduct = async(req, res, next) => {
+exports.createProduct = async (req, res, next) => {
     const product = await Product.create(req.body);
     res.status(200).json({
         success: true,
@@ -21,7 +21,7 @@ exports.getAllProducts = async (req, res, next) => {
 };
 
 // Get product details
-exports.getProductDetails = async(req, res, next) => {
+exports.getProductDetails = async (req, res, next) => {
     const product = await Product.findById(req.params.id);
     if (!product) {
         // Calling error handler class so that we don't have to type it manually more than once
@@ -34,12 +34,12 @@ exports.getProductDetails = async(req, res, next) => {
 };
 
 // Update product ---> Admin Route
-exports.updateProduct = async(req, res, next) => {
+exports.updateProduct = async (req, res, next) => {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body);
     if (!product) {
         // Calling error handler class so that we don't have to type it manually more than once
         return next(new ErrorHander("Product not found", 404));
-    } else{
+    } else {
         return res.status(200).json({
             success: true,
             product: req.body
@@ -48,12 +48,12 @@ exports.updateProduct = async(req, res, next) => {
 };
 
 // Delete product ---> Admin Route
-exports.deleteProduct = async(req, res, next) => {
+exports.deleteProduct = async (req, res, next) => {
     const product = await Product.findByIdAndDelete(req.params.id);
     if (!product) {
         // Calling error handler class so that we don't have to type it manually more than once
         return next(new ErrorHander("Product not found", 404));
-    } else{
+    } else {
         return res.status(200).json({
             success: true,
             message: "Product deleted successfully"
