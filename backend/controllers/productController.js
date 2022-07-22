@@ -3,13 +3,13 @@ const ErrorHander = require('../utils/errorHander.js');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors.js');
 
 // Create product ---> Admin Route
-exports.createProduct = async (req, res, next) => {
+exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.create(req.body);
     res.status(200).json({
         success: true,
         product
     });
-};
+});
 
 // Get all products
 exports.getAllProducts = async (req, res, next) => {
